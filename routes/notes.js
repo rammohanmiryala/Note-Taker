@@ -39,19 +39,22 @@ notes.post('/', (req, res) => {
 // DELETE Route for a specific note
 notes.delete('/:id', (req, res) => {
     const notesId = req.params.id;
-    
+    console.log("deletingnotes")
     readFromFile('./db/db.json')
         .then((data) => JSON.parse(data))
         .then((json) => {
             // Make a new array of all tips except the one with the ID provided in the URL
             const result = json.filter((notes) => notes.id !== notesId);
-
+            console.log(result)
+            // Respond to the DELETE request
+            res.json(`note ${notesId} has been deleted 🗑️`);
+            
             // Save that array to the filesystem
             writeToFile('./db/db.json', result);
 
-            // Respond to the DELETE request
-            res.json(`note ${notesId} has been deleted 🗑️`);
+            
         });
+        
 });
 
 module.exports = notes;
