@@ -24,7 +24,7 @@ notes.post('/', (req, res) => {
             notes_id: uuidv4(),
         }
 
-        readAndAppend(createnote, './db/db.json');
+        readAndAppend(createnote, '../db/db.json');
         res.json("your note is added")
 
 
@@ -39,14 +39,14 @@ notes.post('/', (req, res) => {
 // DELETE Route for a specific note
 notes.delete('/:notes_id', (req, res) => {
     const notesId = req.params.notes_id;
-    readFromFile('./db/db.json')
+    readFromFile('../db/db.json')
         .then((data) => JSON.parse(data))
         .then((json) => {
             // Make a new array of all tips except the one with the ID provided in the URL
             const result = json.filter((notes) => notes.notes_id !== notesId);
 
             // Save that array to the filesystem
-            writeToFile('./db/db.json', result);
+            writeToFile('../db/db.json', result);
 
             // Respond to the DELETE request
             res.json(`note ${notesId} has been deleted 🗑️`);
